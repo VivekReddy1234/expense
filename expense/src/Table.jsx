@@ -27,8 +27,6 @@ export default function Table(){
             }
             </tbody>
         </table>
-        <div className="overflow-scroll">
-          <Analytics/>
-        </div>
+        
     </>)
 }

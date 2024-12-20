@@ -10,6 +10,7 @@ export default function Data({item,index}){
     const[ category,setCategory] =useState(item.category);
     const [date,setDate]= useState(item.date);
     const n= List.length-1;
+    
     const handleSave= ()=>{
      
       const a=List.map(l=>(l.id==item.id?{...l,name,date,category,amount}:l))

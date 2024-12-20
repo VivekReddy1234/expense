@@ -56,21 +56,28 @@ function App() {
 
   return (
     <>
-    <div className=' flex justify-center items-center flex-col'>
-      <h1 className=' text-2xl font-extrabold mt-[50px]'>Expense Tracker</h1>
-      <div className='flex mt-[80px] justify-stretch'><input type="text" placeholder='Expense Name' required value={name} onChange={(e)=>{setName(e.target.value);}}></input>
+    <div className=' flex  items-center flex-col'>
+      
+      <div className='flex mt-[30px] justify-stretch'>
+
+      <input type="text" placeholder='Expense Name' required value={name} onChange={(e)=>{setName(e.target.value);}}></input>
       <input type="number" placeholder='Enter Amount' required value={amount} onChange={(e)=>{setAmount(e.target.value);}}></input>
+      
       <Category setCateg={setCategory} cate={category}/>
+      
       <input type='date' value={date}   required onChange={(e)=>{ setDate(e.target.value);}}></input>
-      <button className=' bg-green-700 border border-black h-[40px] w-[150px] rounded-lg' onClick={add}>Add Expense</button>
+      
+      
+    <button className=' bg-green-700 border border-black h-[40px] w-[150px] rounded-lg' onClick={add}>Add Expense</button>
+    
        </div>
     </div>
-    <div >
-    <Table/>
+    <div className='flex flex-col justify-center' >
+    {List.length>0?<Table/>:<div></div> }
       
     
      { 
-      total?(<div className=' flex justify-center font-semibold text-lg text-center'> The total expenses are Rs.{total}</div>):(<div>No Expenses </div>)
+      total?(<div className=' flex justify-center font-semibold text-lg text-center'> The total expenses are Rs.{total}</div>):(<div className='flex justify-center font-bold mt-[10px]'>No Expenses </div>)
       
      }
         
