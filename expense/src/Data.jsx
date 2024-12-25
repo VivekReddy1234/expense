@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useTrackContext } from "./Context/ContextApi"
-
+import { useEffect } from "react";
 
 export default function Data({item,index}){
     const {List,setList} = useTrackContext();
@@ -11,6 +11,14 @@ export default function Data({item,index}){
     const [date,setDate]= useState(item.date);
     const n= List.length-1;
     
+
+    useEffect(() => {
+      setName(item.name);
+      setAmount(item.amount);
+      setCategory(item.category);
+      setDate(item.date);
+    }, [item]);
+
     const handleSave= ()=>{
      
       const a=List.map(l=>(l.id==item.id?{...l,name,date,category,amount}:l))

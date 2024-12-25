@@ -11,11 +11,11 @@ function App() {
   const [name,setName]=useState("");
   const [amount,setAmount]= useState();
   const [date,setDate]= useState(Date.now());
-  const [category,setCategory] = useState("select Your category");
+  const [category,setCategory] = useState("");
   
   const add = ()=>{
     const n= name;
-    const a= amount;
+    const a= (Number)(amount);
     const d= date;
     const c= category;
     if(!name || !amount || !date || !category || category=="select Your category"){
@@ -29,7 +29,7 @@ function App() {
       category: c,
       date: d,
     }
-    setName(""); setAmount(0); setCategory("Select Your Category"); setDate("");
+    setName(""); setAmount(0); setCategory(""); setDate("");
     setList((prev)=>{
       const update= [...prev,ad];
       localStorage.setItem("List", JSON.stringify(update));
@@ -60,10 +60,11 @@ function App() {
       
       <div className='flex mt-[30px] justify-stretch'>
 
-      <input type="text" placeholder='Expense Name' required value={name} onChange={(e)=>{setName(e.target.value);}}></input>
-      <input type="number" placeholder='Enter Amount' required value={amount} onChange={(e)=>{setAmount(e.target.value);}}></input>
+      <input type="text" placeholder='Expense Name' className='border-2 mx-3 text-center' required value={name} onChange={(e)=>{setName(e.target.value);}}></input>
+      <input type="number" placeholder='Enter Amount' className='border-2 text-center mx-4' required value={amount} onChange={(e)=>{setAmount(e.target.value);}}></input>
       
-      <Category setCateg={setCategory} cate={category}/>
+      {/* <Category setCateg={setCategory} cate={category}/> */}
+      <input type="text" placeholder='Category' className='border-2 text-center mx-4' required value={category} onChange={(e)=>{setCategory(e.target.value);}}></input>
       
       <input type='date' value={date}   required onChange={(e)=>{ setDate(e.target.value);}}></input>
       
