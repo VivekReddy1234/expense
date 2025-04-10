@@ -16,7 +16,14 @@ async function login(req, res) {
         if (!token) return res.status(401).json({ 'msg': "Invalid password" });
 
         // Set the token as a cookie
-        res.cookie("token", token);
+        res.cookie("token", token, {
+  httpOnly: true,
+  secure: true, // 👈 Required for HTTPS (like on Render)
+  sameSite: "None", // 👈 Required when frontend & backend are on different domains
+  maxAge: 7 * 24 * 60 * 60 * 1000 // example: 7 days
+});
+   console.log(token);
+
         return res.status(200).json({ 'msg': "Login successful" });
 
     } catch (error) {
