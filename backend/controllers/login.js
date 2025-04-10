@@ -23,6 +23,7 @@ async function login(req, res) {
   maxAge: 7 * 24 * 60 * 60 * 1000 // example: 7 days
 });
    console.log("The token generated is ",token);
+   console.log("After generation",res.cookies);
 
         return res.status(200).json({ 'msg': "Login successful" });
 
