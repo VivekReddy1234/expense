@@ -22,7 +22,7 @@ async function login(req, res) {
   sameSite: "None", // 👈 Required when frontend & backend are on different domains
   maxAge: 7 * 24 * 60 * 60 * 1000 // example: 7 days
 });
-   console.log(token);
+   console.log("The token generated is ",token);
 
         return res.status(200).json({ 'msg': "Login successful" });
 
