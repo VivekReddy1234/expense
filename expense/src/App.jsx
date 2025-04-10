@@ -5,84 +5,48 @@ import './App.css'
 import Category from './Category'
 import { useTrackContext } from './Context/ContextApi'
 import Table from './Table'
+import Navbar from './components/Navbar'
+import ShowExpense from './components/ShowExpense'
 
 function App() {
-  const {List, setList}= useTrackContext();
-  const [name,setName]=useState("");
-  const [amount,setAmount]= useState();
-  const [date,setDate]= useState(Date.now());
-  const [category,setCategory] = useState("");
+
+  const [user,setUser]= useState(null);
+  const [expenses,setExpenses]=useState();
+ // calll the get function so that it checks for whether the user is logged in or not if logged in gives details;
+ useEffect(() => {
+   const fetchUser = async () => {
+     try {
+       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/`, {
+         method: "GET",
+         credentials: "include", // Ensure cookies are sent with the request
+       });
+
+       const data = await response.json(); // Properly parse the JSON
+       setUser(data.user);
+       console.log(data.expenses);
+       setExpenses(data.expenses);
+       // Set user state
+      
   
-  const add = ()=>{
-    const n= name;
-    const a= (Number)(amount);
-    const d= date;
-    const c= category;
-    if(!name || !amount || !date || !category || category=="select Your category"){
-      alert("Fill the missing fields");
-      return;
-    }
-    const ad={
-      id: Date.now(),
-      name :n,
-      amount :a,
-      category: c,
-      date: d,
-    }
-    setName(""); setAmount(0); setCategory(""); setDate("");
-    setList((prev)=>{
-      const update= [...prev,ad];
-      localStorage.setItem("List", JSON.stringify(update));
-      return update;
-    });
-  
-  }
+     } catch (error) {
+       console.log("Error fetching user:", error);
+     }
+   };
 
-  const [total,setTotal] = useState(0);
-  useEffect(()=>{
-    if(List.length>0){
-    const t= List.reduce((total,item)=> total+ parseInt(item.amount),0);
-    setTotal(t);}
-    else setTotal(0);
-
-    
-  },[List])
-
-  useEffect(()=>{
-    const store= JSON.parse(localStorage.getItem("List"));
-   setList(store || []);
-
-  },[]);
+   fetchUser(); // Call the function
+ }, []); 
 
   return (
     <>
-    <div className=' flex  items-center flex-col'>
-      
-      <div className='flex mt-[30px] justify-stretch'>
+        <div>
+          <Navbar detail={user}/>
+        </div>
 
-      <input type="text" placeholder='Expense Name' className='border-2 mx-3 text-center' required value={name} onChange={(e)=>{setName(e.target.value);}}></input>
-      <input type="number" placeholder='Enter Amount' className='border-2 text-center mx-4' required value={amount} onChange={(e)=>{setAmount(e.target.value);}}></input>
-      
-      {/* <Category setCateg={setCategory} cate={category}/> */}
-      <input type="text" placeholder='Category' className='border-2 text-center mx-4' required value={category} onChange={(e)=>{setCategory(e.target.value);}}></input>
-      
-      <input type='date' value={date}   required onChange={(e)=>{ setDate(e.target.value);}}></input>
-      
-      
-    <button className=' bg-green-700 border border-black h-[40px] w-[150px] rounded-lg' onClick={add}>Add Expense</button>
-    
-       </div>
-    </div>
-    <div className='flex flex-col justify-center' >
-    {List.length>0?<Table/>:<div></div> }
-      
-    
-     { 
-      total?(<div className=' flex justify-center font-semibold text-lg text-center'> The total expenses are Rs.{total}</div>):(<div className='flex justify-center font-bold mt-[10px]'>No Expenses </div>)
-      
-     }
-        
-    </div>
+        {expenses?<div>
+          <ShowExpense expenses={expenses}/>
+        </div>:<div>
+          There are No expenses to Show Right Now 
+        </div>}
     </>
   )
 }
