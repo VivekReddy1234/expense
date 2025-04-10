@@ -16,7 +16,7 @@ mongoose.connect(process.env.MONGO_URL).then(()=>{console.log("Database connecte
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:9000', 'https://expense-eight-sepia.vercel.app','https://expense-git-main-vivekreddy1234s-projects.vercel.app/'],
+  origin: ['http://localhost:5173', 'https://expense-git-main-vivekreddy1234s-projects.vercel.app', 'https://expense-eight-sepia.vercel.app','https://expense-git-main-vivekreddy1234s-projects.vercel.app/'],
   credentials: true
 }));
 
