@@ -3,8 +3,8 @@ const { getUser } = require("../service/auth");
 const checkForAuth = (req, res, next) => {
     try {
         const token = req.cookies?.token;
-        console.log(req.cookies);
-        console.log(token);
+        console.log("Cookies set in are ",req.cookies);
+       
         if (!token) {
           
             req.user = null;
@@ -12,7 +12,7 @@ const checkForAuth = (req, res, next) => {
         }
 
         const user = getUser(token);
-        console.log(user);
+        console.log("The user is ",user);
         if (user) {
            
             req.user = user;
