@@ -14,11 +14,13 @@ const Expense = require("./models/expense.js");
 app.use(cookieParser());
 mongoose.connect(process.env.MONGO_URL).then(()=>{console.log("Database connected")}).catch((err)=>{console.log("error",err)});
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({extended:false}));
+// Backend: CORS config
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://expense-git-main-vivekreddy1234s-projects.vercel.app', 'https://expense-eight-sepia.vercel.app','https://expense-git-main-vivekreddy1234s-projects.vercel.app/'],
+  origin: 'https://expense-git-main-vivekreddy1234s-projects.vercel.app',
   credentials: true
 }));
+
 
 app.use(checkForAuth);
 
@@ -27,6 +29,7 @@ app.use(checkForAuth);
 app.use('/user',userRouter);
 app.use('/expense',expenseRouter);
 app.get('/', async(req,res)=>{
+   
     const user= req.user;
     var expenses=null;
    if(user){ expenses = await Expense.find({createdBy:user._id});}
