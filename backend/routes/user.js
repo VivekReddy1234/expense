@@ -9,8 +9,8 @@ router.post('/signup',signup);
 router.get('/logout',(req,res)=>{
     res.clearCookie('token', {
         httpOnly: true,
-        sameSite: "Lax", // or "None" if cross-origin
-        secure: false, // true if using HTTPS
+        sameSite: "None", // or "None" if cross-origin
+        secure: true, // true if using HTTPS
       });
       console.log("cleared cookie");
       res.status(200).json({ msg: "Cookie deleted successfully" });
